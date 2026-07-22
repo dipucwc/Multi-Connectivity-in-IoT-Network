@@ -127,12 +127,12 @@ Counts nodes located inside each value of the coverage-radius vector.
 
 Calculates normalized interference-aware capacity using:
 
-$$
+```math
 \mathrm{SINR}
 =
 \frac{P_s d_s^{-\alpha}}
 {N_0+\sum_i P_i d_i^{-\alpha}}
-$$
+```
 
 $$
 C
