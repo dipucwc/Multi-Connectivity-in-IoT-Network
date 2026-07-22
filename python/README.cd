@@ -137,18 +137,13 @@ Counts nodes inside each selected coverage radius.
 
 Calculates normalized interference-aware capacity using:
 
-$$
-\mathrm{SINR}
-=
-\frac{P_s d_s^{-\alpha}}
-{N_0+\sum_i P_i d_i^{-\alpha}}
-$$
+```text
+SINR = (P_s × d_s^(-alpha)) / (N_0 + Σ[P_i × d_i^(-alpha)])
+```
 
-$$
-C
-=
-W\log_2(1+\mathrm{SINR})
-$$
+```text
+C = W × log2(1 + SINR)
+```
 
 The transmit-power, interference, and noise values are normalized. The resulting capacity is therefore used for comparative system analysis.
 
@@ -160,11 +155,9 @@ Counts nodes meeting both distance and minimum-capacity conditions.
 
 Calculates independent-link multi-connectivity availability:
 
-$$
-A_K
-=
-1-(1-p)^K
-$$
+```text
+A_K = 1 - (1 - p)^K
+```
 
 ### `save_project_figure.py`
 
