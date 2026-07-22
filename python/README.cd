@@ -2,7 +2,8 @@
 
 This folder contains the complete Python implementation of the **Multi-Connectivity in IoT Network** project.
 
-The Python package independently implements the same analytical and simulation workflow as the MATLAB package. It evaluates node coverage, node-density behavior, normalized interference-aware link capacity, capacity-based node qualification, and multi-connectivity reliability.
+The Python package independently implements the same analytical and simulation workflow as the MATLAB package. 
+It evaluates node coverage, node-density behavior, normalized interference-aware link capacity, capacity-based node qualification, and multi-connectivity reliability.
 
 ## Requirements
 
