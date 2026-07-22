@@ -127,18 +127,13 @@ Counts nodes located inside each value of the coverage-radius vector.
 
 Calculates normalized interference-aware capacity using:
 
-```math
-\mathrm{SINR}
-=
-\frac{P_s d_s^{-\alpha}}
-{N_0+\sum_i P_i d_i^{-\alpha}}
+```text
+SINR = (P_s × d_s^(-alpha)) / (N_0 + Σ[P_i × d_i^(-alpha)])
 ```
 
-$$
-C
-=
-W\log_2(1+\mathrm{SINR})
-$$
+```text
+C = W × log2(1 + SINR)
+```
 
 The current project uses normalized transmit-power and noise values. Therefore, the capacity results represent relative system behavior rather than calibrated physical throughput.
 
@@ -153,11 +148,9 @@ Counts nodes that satisfy both:
 
 Calculates analytical availability for independent links:
 
-$$
-A_K
-=
-1-(1-p)^K
-$$
+```text
+A_K = 1 - (1 - p)^K
+```
 
 where:
 
@@ -201,40 +194,3 @@ Open MATLAB in this folder and run:
 ```matlab
 verify_model
 run_all_analyses
-```
-
-The individual studies can also be executed separately:
-
-```matlab
-run_radius_vs_node_count
-run_density_vs_node_count
-run_capacity_threshold_analysis
-run_power_vs_capacity
-run_multiconnectivity_reliability
-```
-
-## Generated Figures
-
-```text
-../plots/01_radius_vs_node_count.png
-../plots/02_density_vs_node_count.png
-../plots/03_capacity_threshold_analysis.png
-../plots/04_power_vs_capacity.png
-../plots/05_multiconnectivity_reliability.png
-```
-
-## Technical Scope
-
-This MATLAB package provides analytical and Monte Carlo evaluation of:
-
-- IoT node coverage;
-- spatial node density;
-- normalized link capacity under interference;
-- capacity-aware node qualification;
-- multi-connectivity availability and outage.
-
-It is a system-level simulation and analysis project. It does not currently model traffic queues, mobility, correlated link failures, protocol signaling, or calibrated radio-hardware throughput.
-
-## Author
-
-**Md Moklesur Rahman**
