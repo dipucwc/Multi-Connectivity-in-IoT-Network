@@ -1,0 +1,41 @@
+# Upgraded MATLAB Package
+
+This folder contains the  MATLAB implementation for the **Multi-Connectivity in IoT Network** project.
+
+The  MATLAB files are preserved in the `legacy/` folder. The implementation adds descriptive filenames, centralized parameters, reusable functions, input validation, seeded simulations, consistent plotting, automated figure export, selected regression checks, and a multi-connectivity reliability study.
+
+## Main Scripts
+
+- `run_all_analyses.m` — runs the complete MATLAB workflow.
+- `run_radius_vs_node_count.m` — evaluates available nodes versus coverage radius.
+- `run_density_vs_node_count.m` — evaluates node density and coverage count.
+- `run_capacity_threshold_analysis.m` — evaluates coverage and capacity thresholds.
+- `run_power_vs_capacity.m` — evaluates transmit power versus link capacity.
+- `run_multiconnectivity_reliability.m` — compares single, dual, and triple connectivity.
+- `test_model_functions.m` — runs selected deterministic checks.
+
+## Supporting Functions
+
+- `default_parameters.m`
+- `generate_node_positions.m`
+- `calculate_distances.m`
+- `calculate_link_capacity.m`
+- `count_nodes_within_radius.m`
+- `count_qualified_nodes.m`
+- `calculate_multiconnectivity_availability.m`
+- `save_project_figure.m`
+
+## Run
+
+Open MATLAB in the `matlab/` folder and execute:
+
+```matlab
+test_model_functions
+run_all_analyses
+```
+
+Generated plots are saved in the repository-level `plots/` folder.
+
+## Important Model Note
+
+The original scripts used `log(1 + SINR)`. The upgraded capacity function uses `log2(1 + SINR)` so the result has the conventional bit/s interpretation when bandwidth is specified in hertz.
