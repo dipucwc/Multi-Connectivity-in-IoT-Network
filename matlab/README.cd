@@ -1,41 +1,240 @@
-# Upgraded MATLAB Package
+# MATLAB Implementation
 
-This folder contains the  MATLAB implementation for the **Multi-Connectivity in IoT Network** project.
+This folder contains the complete MATLAB implementation of the **Multi-Connectivity in IoT Network** project.
 
-The  MATLAB files are preserved in the `legacy/` folder. The implementation adds descriptive filenames, centralized parameters, reusable functions, input validation, seeded simulations, consistent plotting, automated figure export, selected regression checks, and a multi-connectivity reliability study.
+The code evaluates node coverage, node-density behavior, interference-aware link capacity, capacity-based node qualification, and single-, dual-, and triple-connectivity reliability. The implementation also includes seeded Monte Carlo verification, deterministic regression checks, reusable functions, centralized parameters, and automatic plot generation.
+
+## Main Features
+
+- reproducible random node deployment;
+- coverage-radius and node-count analysis;
+- node-density comparison with the theoretical expectation;
+- normalized interference-aware link-capacity calculation;
+- joint coverage and capacity-threshold evaluation;
+- analytical multi-connectivity availability;
+- seeded Monte Carlo reliability verification;
+- selected deterministic and statistical regression checks;
+- automatic export of five result figures.
 
 ## Main Scripts
 
-- `run_all_analyses.m` — runs the complete MATLAB workflow.
-- `run_radius_vs_node_count.m` — evaluates available nodes versus coverage radius.
-- `run_density_vs_node_count.m` — evaluates node density and coverage count.
-- `run_capacity_threshold_analysis.m` — evaluates coverage and capacity thresholds.
-- `run_power_vs_capacity.m` — evaluates transmit power versus link capacity.
-- `run_multiconnectivity_reliability.m` — compares single, dual, and triple connectivity.
-- `test_model_functions.m` — runs selected deterministic checks.
+### `run_all_analyses.m`
 
-## Supporting Functions
-
-- `default_parameters.m`
-- `generate_node_positions.m`
-- `calculate_distances.m`
-- `calculate_link_capacity.m`
-- `count_nodes_within_radius.m`
-- `count_qualified_nodes.m`
-- `calculate_multiconnectivity_availability.m`
-- `save_project_figure.m`
-
-## Run
-
-Open MATLAB in the `matlab/` folder and execute:
+Runs the complete MATLAB workflow and generates all five project plots.
 
 ```matlab
-test_model_functions
 run_all_analyses
 ```
 
-Generated plots are saved in the repository-level `plots/` folder.
+### `run_radius_vs_node_count.m`
 
-## Important Model Note
+Evaluates how the number of available nodes changes with coverage radius.
 
-The original scripts used `log(1 + SINR)`. The upgraded capacity function uses `log2(1 + SINR)` so the result has the conventional bit/s interpretation when bandwidth is specified in hertz.
+Main outputs:
+
+- available-node count over the radius sweep;
+- comparison values at selected radii;
+- `01_radius_vs_node_count.png`.
+
+### `run_density_vs_node_count.m`
+
+Evaluates the number of nodes inside a fixed coverage radius as spatial node density increases.
+
+Main outputs:
+
+- seeded deployment results;
+- theoretical expectation based on node density and circular coverage area;
+- `02_density_vs_node_count.png`.
+
+### `run_capacity_threshold_analysis.m`
+
+Counts nodes that satisfy both the coverage-radius condition and a selected minimum-capacity threshold.
+
+The configured thresholds are:
+
+```text
+0.05
+0.10
+0.20
+```
+
+Main output:
+
+- `03_capacity_threshold_analysis.png`.
+
+### `run_power_vs_capacity.m`
+
+Evaluates normalized link capacity over the remote transmit-power sweep for path-loss exponents:
+
+```text
+alpha = 2
+alpha = 4
+```
+
+Main output:
+
+- `04_power_vs_capacity.png`.
+
+### `run_multiconnectivity_reliability.m`
+
+Evaluates outage and availability for:
+
+```text
+K = 1  Single connectivity
+K = 2  Dual connectivity
+K = 3  Triple connectivity
+```
+
+The analytical model assumes statistically independent serving-link failures. Seeded Monte Carlo markers are used to verify the analytical curves.
+
+Main output:
+
+- `05_multiconnectivity_reliability.png`.
+
+## Supporting Functions
+
+### `default_parameters.m`
+
+Defines all common project settings, including:
+
+- random seed;
+- service-area dimensions;
+- reference position;
+- candidate-node count;
+- radius vector;
+- density sweep;
+- normalized power and noise parameters;
+- path-loss exponents;
+- capacity thresholds;
+- link-availability sweep;
+- connectivity orders;
+- Monte Carlo run count;
+- plot-output directory.
+
+### `generate_node_positions.m`
+
+Generates uniformly distributed node positions over the rectangular service area.
+
+### `calculate_distances.m`
+
+Calculates Euclidean distance from each node to the selected reference position.
+
+### `count_nodes_within_radius.m`
+
+Counts nodes located inside each value of the coverage-radius vector.
+
+### `calculate_link_capacity.m`
+
+Calculates normalized interference-aware capacity using:
+
+```math
+\mathrm{SINR}
+=
+\frac{P_s d_s^{-\alpha}}
+{N_0+\sum_i P_i d_i^{-\alpha}}
+```
+
+```math
+C
+=
+W\log_2(1+\mathrm{SINR})
+```
+
+The current project uses normalized transmit-power and noise values. Therefore, the capacity results represent relative system behavior rather than calibrated physical throughput.
+
+### `count_qualified_nodes.m`
+
+Counts nodes that satisfy both:
+
+- the selected coverage-radius condition;
+- the minimum-capacity threshold.
+
+### `calculate_multiconnectivity_availability.m`
+
+Calculates analytical availability for independent links:
+
+```math
+A_K
+=
+1-(1-p)^K
+```
+
+where:
+
+- p is the availability of one link;
+- K is the connectivity order.
+
+### `save_project_figure.m`
+
+Saves figures in the repository-level `plots/` folder.
+
+### `verify_model.m`
+
+Runs selected regression checks for:
+
+- 3-4-5 distance geometry;
+- fixed radius counting;
+- closed-form availability;
+- exact normalized capacity value;
+- mean node count versus the theoretical circular-area expectation.
+
+## Regression Checks
+
+The MATLAB implementation verifies:
+
+```text
+[OK] distances 3-4-5 geometry
+[OK] radius counting
+[OK] availability closed forms
+[OK] capacity exact value (38.702)
+[OK] mean node count versus n*pi*R^2/L^2
+```
+
+Use the wording:
+
+> Selected analytical and statistical regression checks passed.
+
+## How to Run
+
+Open MATLAB in this folder and run:
+
+```matlab
+verify_model
+run_all_analyses
+```
+
+The individual studies can also be executed separately:
+
+```matlab
+run_radius_vs_node_count
+run_density_vs_node_count
+run_capacity_threshold_analysis
+run_power_vs_capacity
+run_multiconnectivity_reliability
+```
+
+## Generated Figures
+
+```text
+../plots/01_radius_vs_node_count.png
+../plots/02_density_vs_node_count.png
+../plots/03_capacity_threshold_analysis.png
+../plots/04_power_vs_capacity.png
+../plots/05_multiconnectivity_reliability.png
+```
+
+## Technical Scope
+
+This MATLAB package provides analytical and Monte Carlo evaluation of:
+
+- IoT node coverage;
+- spatial node density;
+- normalized link capacity under interference;
+- capacity-aware node qualification;
+- multi-connectivity availability and outage.
+
+It is a system-level simulation and analysis project. It does not currently model traffic queues, mobility, correlated link failures, protocol signaling, or calibrated radio-hardware throughput.
+
+## Author
+
+**Md Moklesur Rahman**
