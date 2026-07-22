@@ -127,18 +127,18 @@ Counts nodes located inside each value of the coverage-radius vector.
 
 Calculates normalized interference-aware capacity using:
 
-```math
+$$
 \mathrm{SINR}
 =
 \frac{P_s d_s^{-\alpha}}
 {N_0+\sum_i P_i d_i^{-\alpha}}
-```
+$$
 
-```math
+$$
 C
 =
 W\log_2(1+\mathrm{SINR})
-```
+$$
 
 The current project uses normalized transmit-power and noise values. Therefore, the capacity results represent relative system behavior rather than calibrated physical throughput.
 
@@ -153,11 +153,11 @@ Counts nodes that satisfy both:
 
 Calculates analytical availability for independent links:
 
-```math
+$$
 A_K
 =
 1-(1-p)^K
-```
+$$
 
 where:
 
