@@ -1,1 +1,265 @@
-python/README.cd
+# Python Implementation
+
+This folder contains the complete Python implementation of the **Multi-Connectivity in IoT Network** project.
+
+The Python package independently implements the same analytical and simulation workflow as the MATLAB package. It evaluates node coverage, node-density behavior, normalized interference-aware link capacity, capacity-based node qualification, and multi-connectivity reliability.
+
+## Requirements
+
+- Python 3.10 or newer
+- NumPy
+- Matplotlib
+
+Install the required packages with:
+
+```bash
+pip install numpy matplotlib
+```
+
+## Main Features
+
+- modular Python implementation;
+- reproducible random node deployment;
+- centralized configuration;
+- coverage and density analysis;
+- normalized link-capacity analysis;
+- analytical multi-connectivity reliability;
+- seeded Monte Carlo verification;
+- regression checks;
+- automatic generation of five figures;
+- MATLAB–Python numerical cross-verification.
+
+## Main Scripts
+
+### `run_all_analyses.py`
+
+Runs the complete Python workflow.
+
+```bash
+python run_all_analyses.py
+```
+
+The script executes:
+
+1. radius-versus-node-count analysis;
+2. density-versus-coverage-count analysis;
+3. capacity-threshold analysis;
+4. transmit-power-versus-capacity analysis;
+5. multi-connectivity reliability analysis.
+
+### `run_radius_vs_node_count.py`
+
+Evaluates available-node count as the coverage radius increases.
+
+Generated figure:
+
+```text
+figures/01_radius_vs_node_count.png
+```
+
+### `run_density_vs_node_count.py`
+
+Compares the seeded node deployment with the theoretical expected number of nodes inside the selected coverage radius.
+
+Generated figure:
+
+```text
+figures/02_density_vs_node_count.png
+```
+
+### `run_capacity_threshold_analysis.py`
+
+Counts nodes satisfying both the selected radius and normalized capacity threshold.
+
+Configured thresholds:
+
+```text
+0.05
+0.10
+0.20
+```
+
+Generated figure:
+
+```text
+figures/03_capacity_threshold_analysis.png
+```
+
+### `run_power_vs_capacity.py`
+
+Evaluates normalized link capacity over the remote transmit-power sweep for path-loss exponents 2 and 4.
+
+Generated figure:
+
+```text
+figures/04_power_vs_capacity.png
+```
+
+### `run_multiconnectivity_reliability.py`
+
+Evaluates single-, dual-, and triple-connectivity outage and availability.
+
+The analytical model assumes statistically independent serving-link failures. Monte Carlo simulation is used as an independent numerical check.
+
+Generated figure:
+
+```text
+figures/05_multiconnectivity_reliability.png
+```
+
+## Supporting Modules
+
+### `default_parameters.py`
+
+Defines common parameters for:
+
+- service-area geometry;
+- node-count and radius sweeps;
+- normalized capacity model;
+- reliability analysis;
+- Monte Carlo simulation;
+- reproducibility;
+- figure output.
+
+### `generate_node_positions.py`
+
+Generates uniformly distributed node coordinates using a seeded NumPy random generator.
+
+### `calculate_distances.py`
+
+Calculates Euclidean distances between nodes and the reference position.
+
+### `count_nodes_within_radius.py`
+
+Counts nodes inside each selected coverage radius.
+
+### `calculate_link_capacity.py`
+
+Calculates normalized interference-aware capacity using:
+
+$$
+\mathrm{SINR}
+=
+\frac{P_s d_s^{-\alpha}}
+{N_0+\sum_i P_i d_i^{-\alpha}}
+$$
+
+$$
+C
+=
+W\log_2(1+\mathrm{SINR})
+$$
+
+The transmit-power, interference, and noise values are normalized. The resulting capacity is therefore used for comparative system analysis.
+
+### `count_qualified_nodes.py`
+
+Counts nodes meeting both distance and minimum-capacity conditions.
+
+### `calculate_multiconnectivity_availability.py`
+
+Calculates independent-link multi-connectivity availability:
+
+$$
+A_K
+=
+1-(1-p)^K
+$$
+
+### `save_project_figure.py`
+
+Creates the output directory when required and saves each figure.
+
+### `verify_model.py`
+
+Runs deterministic and statistical checks for:
+
+- distance geometry;
+- radius counting;
+- single-, dual-, and triple-connectivity closed forms;
+- the exact normalized capacity value of 38.702;
+- mean node count versus the theoretical expectation.
+
+## Regression Checks
+
+The Python package verifies:
+
+```text
+[OK] distances 3-4-5 geometry
+[OK] radius counting
+[OK] availability closed forms
+[OK] capacity exact value (38.702)
+[OK] mean node count versus n*pi*R^2/L^2
+```
+
+## How to Run
+
+Open a terminal in this folder.
+
+Run all analyses:
+
+```bash
+python run_all_analyses.py
+```
+
+Run an individual study:
+
+```bash
+python run_radius_vs_node_count.py
+python run_density_vs_node_count.py
+python run_capacity_threshold_analysis.py
+python run_power_vs_capacity.py
+python run_multiconnectivity_reliability.py
+```
+
+Run only the verification checks:
+
+```bash
+python verify_model.py
+```
+
+## Folder Structure
+
+```text
+python/
+├── calculate_distances.py
+├── calculate_link_capacity.py
+├── calculate_multiconnectivity_availability.py
+├── count_nodes_within_radius.py
+├── count_qualified_nodes.py
+├── default_parameters.py
+├── generate_node_positions.py
+├── run_all_analyses.py
+├── run_capacity_threshold_analysis.py
+├── run_density_vs_node_count.py
+├── run_multiconnectivity_reliability.py
+├── run_power_vs_capacity.py
+├── run_radius_vs_node_count.py
+├── save_project_figure.py
+├── verify_model.py
+├── figures/
+└── README.md
+```
+
+Do not upload the automatically generated cache folder:
+
+```text
+__pycache__/
+```
+
+Recommended `.gitignore` entries:
+
+```gitignore
+__pycache__/
+*.pyc
+```
+
+## Technical Scope
+
+This Python package provides an independent implementation of the analytical and Monte Carlo model. It supports reproducibility and cross-verification with MATLAB.
+
+The current scope includes coverage, density, normalized capacity, node qualification, and independent-link multi-connectivity reliability. It does not currently include traffic queues, correlated failures, mobility, heterogeneous radio access, or protocol-level signaling.
+
+## Author
+
+**Md Moklesur Rahman**
